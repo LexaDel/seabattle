@@ -1,2 +1,2 @@
 # seabattle
-It's project for fun and prove skills
+It's project for fun and improve skills
