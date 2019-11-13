@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif; }
+  body .login-container {
+    position: relative;
+    width: 250px;
+    height: 215px;
+    text-align: center;
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+    body .login-container .login-list-container .login-list-title {
+      font-weight: bold; }
+    body .login-container .login-list-container .list select {
+      width: 250px;
+      height: 25px;
+      font-size: 16px;
+      margin: 5px 0 5px 0; }
+    body .login-container .login-form-container {
+      padding: 10px 0 15px 0;
+      width: 100%; }
+      body .login-container .login-form-container .form {
+        padding-top: 5px; }
+      body .login-container .login-form-container input {
+        width: calc(250px - 4px);
+        height: 25px;
+        font-size: 16px; }
+    body .login-container .login-start-container {
+      position: absolute;
+      bottom: 5px; }
+      body .login-container .login-start-container input {
+        width: 250px;
+        height: 25px;
+        font-size: 16px; }
+  body #container {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+            flex-direction: row;
+    height: 100vh; }
+  body .message-container {
+    width: 200px;
+    height: 340px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+            flex-direction: column; }
+  body .board {
+    width: 511px;
+    height: 341px;
+    background: url(../img/desktop-background.jpg) no-repeat;
+    background-size: 100%;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+            align-items: center;
+    -webkit-perspective: 1000;
+            perspective: 1000; }
+    body .board .flipper.rotate {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg); }
+    body .board .flipper {
+      -webkit-transition: 0.6s;
+      transition: 0.6s;
+      -webkit-transform-style: preserve-3d;
+              transform-style: preserve-3d;
+      position: relative; }
+    body .board .front,
+    body .board .back {
+      -webkit-backface-visibility: hidden;
+              backface-visibility: hidden;
+      position: absolute;
+      top: 0;
+      left: 0; }
+    body .board .front {
+      z-index: 2;
+      background-color: #fff; }
+    body .board .back {
+      -webkit-transform: rotateY(180deg);
+              transform: rotateY(180deg);
+      background-color: #777; }
+    body .board .seabattle-field,
+    body .board .flipper {
+      height: 300px;
+      width: 300px; }
+    body .board .seabattle-field {
+      border-top: 1px solid #000;
+      border-left: 1px solid #000; }
+      body .board .seabattle-field .row {
+        height: 29px;
+        border-bottom: 1px solid #000; }
+      body .board .seabattle-field .cell {
+        width: 29px;
+        height: 100%;
+        display: inline-block;
+        border-right: 1px solid #000; }
+        body .board .seabattle-field .cell.hit, body .board .seabattle-field .cell.miss {
+          background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAMAAABhTZc9AAAAqFBMVEUAAAD////+/v7////////5+fn29vbPz8/7+/v6+vrQ0ND9/f339/f19fX////////9/f35+fn////////S0tLl5eXPz8/9/f38/PzR0dH39/fg4ODPz8/b29v19fX////////a2trS0tLX19fV1dXT09P////////+/v77+/v4+Pj7+/v7+/v5+fn////////V1dX4+Pj5+fn39/f19fXk5OTW1tb///8rFLhwAAAAN3RSTlMA7u3x4ds2LublNutCQPnl4t/c2jgvK+bbMS8sKCYl9PM/MywlA/rp6Oji39G7QT49OuvEtBoR/7KiUgAAAUFJREFUeAFt0umWmlAQBOC6CzLIjjCgMS7jYlw0miX9/m+W1DEOwrX+fqc4fbtBYaw1yo3JrCmQzC+REjc/rvEigb0AA+3gmw8sM4wm+MdhH98B+A0S+xVA1G0fhwD+nLbQkpIHqt/8fRIFJeJVAG71J+Y+gKUndxU7AxCb/1jzs++B3JX8pR0tmAL4CKVVGZHjbyLisVl68qySztg2ojnQVEtXpWE7On8AuObSVynY3gBYHcRVqSdgSi2OMmc2Nz/lpYZDMJF5pTmnZW6hq3kJYPyrAt/d13BNfJxk0VVuCEOPW2P7++5Z97yK/yZMMyOrVoMpm0Qm5dYm+qFByeZBHuHPhGhH1VKzudpLG8sRB1o0kmDMewatkSuymoPv5EDdeHxYnMFbOcikayq2ejkOxM2xikyCwmTNQrmZj6wp/gIyqWcdCm1MhQAAAABJRU5ErkJggg==);
+          background-repeat: no-repeat; }
+        body .board .seabattle-field .cell.hit {
+          background-color: #ff0000; }
+        body .board .seabattle-field .cell.miss {
+          background-color: #666; }
