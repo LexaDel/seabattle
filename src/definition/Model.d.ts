@@ -18,6 +18,9 @@ export interface Player {
 }
 
 export interface PlayerInfo {
+	name: string;
+	kills: number;
+	misses: number; 
 	field: Row[],
 	history: History,
 	ships: Collections.Dictionary<number, IShip>,

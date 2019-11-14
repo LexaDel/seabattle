@@ -6,6 +6,7 @@ import { Player } from "../controls/Player";
 import { createField, createShips, fillRandom, random } from "../utils/Utils";
 import { Cell as CellModel, Row as RowModel } from "src/definition/Model";
 import { CELL_STATE } from "src/constants/Constants";
+import { PlayerInfoForm } from './PlayerInfoForm';
 
 interface BattleShipProps {
     players: string[];
@@ -77,12 +78,11 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 		if (this.state.gameState !== GAME_OVER) {
 			const player: PlayerInfo = this.state[this.state.gameState];
             const field = player.field;
-            const status = this.state.status;
+			const status = this.state.status;
+			const message = this.state.message ? this.state.message : "";
 			return (
 				<React.Fragment>
-					<div className="message-container">
-						{this.state.message ? this.state.message : ""}						
-					</div>
+					<PlayerInfoForm player={player} active={true} message={message} />
 					<div className="board">
 						<h3> {this.state.gameState} </h3>
 						<div className="flipper">
@@ -146,8 +146,9 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 				const ship = player.ships.getValue(cell.ship);
 				const deathShip = ship && ship.hit();
 				if (deathShip) {
+					player.kills++;
 					player.ships.remove(cell.ship);
-					message = "Убит";
+					message = "Убил";
 					if (player.ships.size() === 0) {
 						message = "Игра окончена";
 						gameState = GAME_OVER;
@@ -157,7 +158,8 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 				}
 			} else {
 				cell.state = CELL_STATE.MISS;
-				message = "Промах";
+				player.misses++;
+				message = "Промахнулся";
 			}
 			return {
 				gameState,

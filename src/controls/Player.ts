@@ -11,11 +11,16 @@ export class Player {
     private userInfo: PlayerInfo;
 
     constructor(name: string, field: Row[], history: History, ships: Collections.Dictionary<number, IShip>, pc?: boolean) {
+        const kills = 0
+        const misses = 0;
         this.name = name;
         this.userInfo = {
             field,
             history,
             isPC: !!pc,
+            kills,
+            misses,
+            name,
             ships
         }
     }
