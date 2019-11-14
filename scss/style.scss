@@ -62,13 +62,35 @@ body {
         align-items: center;
         flex-direction: row;
         height: 100vh;
-    }
+        .player-info-container {
+            height: 339px;
+            border: 1px solid #777;
+            position: relative;
+            margin-right: 10px;
 
-    .message-container {    
-        width: 200px;
-        height: 340px;
-        display: flex;
-        flex-direction: column;
+            &.active{
+                box-shadow: 0px 0px 10px red;
+            }
+            
+            .player-name {
+                padding: 5px;
+                text-align: center;
+                font-size: 25px;
+            }
+
+            .player-shots {
+                padding: 5px
+            }
+
+            .player-ships {
+                padding: 5px;
+            }
+
+            .message-container {
+                position: absolute;
+                bottom: 5px;
+            }
+        }
     }
 
     .board {
