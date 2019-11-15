@@ -1,6 +1,6 @@
 import * as React from "react";
 import Field from "./Field";
-import { SIZE_FIELD, GAME_OVER, STATUS, STEP_TIME, GAME_MODE } from "../constants/Constants";
+import { SIZE_FIELD, GAME_OVER, STATUS, STEP_TIME, GAME_MODE, COMPUTER_NAME } from "../constants/Constants";
 import { History as HistoryModel, PlayerInfo } from "../definition/Model";
 import { Player } from "../controls/Player";
 import { createField, createShips, fillRandom, random } from "../utils/Utils";
@@ -56,7 +56,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 		const players: string[] = [...this.props.players];
 		let isPC = false;
         if (players.length === 1) {
-			players.push("computer");
+			players.push(COMPUTER_NAME);
 			isPC = true;
         }
 		// TODO: вынести в создание или поля или игрока
@@ -79,10 +79,12 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 			const player: PlayerInfo = this.state[this.state.gameState];
             const field = player.field;
 			const status = this.state.status;
-			const message = this.state.message ? this.state.message : "";
+			const player1 = this.state[this.props.players[0]]; 
+			const playerName = this.props.players.length === 1 ? COMPUTER_NAME : this.props.players[1];
+			const player2 = this.state[playerName];
 			return (
 				<React.Fragment>
-					<PlayerInfoForm player={player} active={true} message={message} />
+					<PlayerInfoForm player={player1} active={player1.name === this.state.gameState} position={"left"}/>
 					<div className="board">
 						<h3> {this.state.gameState} </h3>
 						<div className="flipper">
@@ -95,6 +97,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 							</div>
 						</div>
 					</div>
+					<PlayerInfoForm player={player2} active={player2.name === this.state.gameState}  position={"right"}/>
 				</React.Fragment>
 			);
 		} else {

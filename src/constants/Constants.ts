@@ -24,3 +24,4 @@ export enum GAME_MODE {
 }
 
 export const GAME_OVER = "game over";
+export const COMPUTER_NAME = "computer";
