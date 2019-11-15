@@ -151,6 +151,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 				const deathShip = ship && ship.hit();
 				if (deathShip) {
 					player.kills++;
+					cell.highlight = false;
 					player.ships.remove(cell.ship);
 					message = "Убил";
 					if (player.ships.size() === 0) {
@@ -158,10 +159,12 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 						gameState = GAME_OVER;
 					}
 				} else {
+					cell.highlight = false;
 					message = "Попал";
 				}
 			} else {
 				cell.state = CELL_STATE.MISS;
+				cell.highlight = false;
 				player.misses++;
 				message = "Промахнулся";
 			}
@@ -190,7 +193,6 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 	private highlightRiskCells(field: RowModel[], cell: CellModel): void {
 		if (cell.state === CELL_STATE.HIT) {
 			const {x, y} = cell;
-			cell.highlight = false;
 			this.highlight(x + 1, y, field);
 			this.highlight(x - 1, y, field);
 			this.highlight(x, y + 1, field);
