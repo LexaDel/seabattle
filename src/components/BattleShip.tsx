@@ -199,7 +199,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 	}
 
 	private highlight(x: number, y: number, field: RowModel[]) {
-		if ((x >= 0 && x <= SIZE_FIELD) && (y >= 0 && y <= SIZE_FIELD)) {
+		if ((x >= 0 && x < SIZE_FIELD) && (y >= 0 && y < SIZE_FIELD)) {
 			field[x].cells[y].highlight = field[x].cells[y].state === CELL_STATE.EMPTY;
 		}
 	}
