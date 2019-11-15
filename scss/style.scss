@@ -167,6 +167,10 @@ body {
                 &.miss {
                     background-color: #666;
                 }
+
+                &.highlight {
+                    background-color: #d1d1d1;
+                }
             }
         }
     }

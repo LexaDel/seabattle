@@ -11,6 +11,7 @@ export interface Cell {
 	y: number;
 	state: CELL_STATE;
 	ship: number;
+	highlight: boolean;
 }
 
 export interface Player {

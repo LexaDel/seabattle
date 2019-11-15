@@ -121,3 +121,5 @@ body {
           background-color: #ff0000; }
         body .board .seabattle-field .cell.miss {
           background-color: #666; }
+        body .board .seabattle-field .cell.highlight {
+          background-color: #d1d1d1; }

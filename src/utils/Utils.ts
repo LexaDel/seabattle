@@ -90,8 +90,8 @@ function isShipAround(field: Row[], x: number, y: number): boolean {
       || field[maxX].cells[y].ship !== -1 || field[x].cells[maxY].ship !== -1;
 }
 
-function createCell({ x = 0, y = 0, state = CELL_STATE.EMPTY, ship = -1 } = {}): Cell {
-    return { x, y, state, ship };
+function createCell({ x = 0, y = 0, state = CELL_STATE.EMPTY, ship = -1, highlight = false } = {}): Cell {
+    return { x, y, state, ship, highlight };
 }
 
 function shuffle(array: any[]): any[] {
@@ -115,13 +115,11 @@ function placeTo(field: Row[], ship: number, shipSize: number, place: Place): vo
     if (orientation === ORIENTATION.HORIZONTAL) {
       for (let i = x; i < x + shipSize; i++) {
         field[i].cells[y].ship = ship;
-        field[i].cells[y].state = CELL_STATE.SHIP; 
       }
     }
     if (orientation === ORIENTATION.VERTICAL) {
       for (let j = y; j < y + shipSize; j++) {
         field[x].cells[j].ship = ship;
-        field[x].cells[j].state = CELL_STATE.SHIP;
       }
     }
 }

@@ -113,6 +113,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 			const player: PlayerInfo = state[state.gameState];
 			const cell = player.field[x].cells[y];
 			const result = this.ply(cell, player);
+			this.highlightRiskCells(player.field, cell);
 			return result && {
 				gameState: result.gameState,
 				[state.gameState]: result.player,
@@ -141,10 +142,10 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 	}
 
 	private ply(cell: CellModel, player: PlayerInfo): any {
-		if (cell.state === CELL_STATE.SHIP || cell.state === CELL_STATE.EMPTY) {
+		if (cell.ship !== -1 || cell.state === CELL_STATE.EMPTY) {
 			let message = "";
             let gameState = this.queuePlayers[0];
-			if (CELL_STATE.SHIP === cell.state) {
+			if (cell.ship !== -1) {
 				cell.state = CELL_STATE.HIT;
 				const ship = player.ships.getValue(cell.ship);
 				const deathShip = ship && ship.hit();
@@ -184,5 +185,22 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
                 this.computerStep();
             }
         },900);
-    }
+	}
+	
+	private highlightRiskCells(field: RowModel[], cell: CellModel): void {
+		if (cell.state === CELL_STATE.HIT) {
+			const {x, y} = cell;
+			cell.highlight = false;
+			this.highlight(x + 1, y, field);
+			this.highlight(x - 1, y, field);
+			this.highlight(x, y + 1, field);
+			this.highlight(x, y - 1, field);
+		}
+	}
+
+	private highlight(x: number, y: number, field: RowModel[]) {
+		if ((x >= 0 && x <= SIZE_FIELD) && (y >= 0 && y <= SIZE_FIELD)) {
+			field[x].cells[y].highlight = field[x].cells[y].state === CELL_STATE.EMPTY;
+		}
+	}
 }
