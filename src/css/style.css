@@ -5,35 +5,42 @@ body {
   body .login-container {
     position: relative;
     width: 250px;
-    height: 215px;
-    text-align: center;
-    border: 1px solid gray;
+    height: 240px;
     border-radius: 5px;
     padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); }
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background: rgba(255, 255, 255, 0.9); }
     body .login-container .login-list-container .login-list-title {
       font-weight: bold; }
     body .login-container .login-list-container .list select {
       width: 250px;
-      height: 25px;
+      height: calc(25px + 4px);
       font-size: 16px;
       margin: 5px 0 5px 0; }
     body .login-container .login-form-container {
       padding: 10px 0 15px 0;
       width: 100%; }
       body .login-container .login-form-container .form {
-        padding-top: 5px; }
+        padding-top: 10px; }
+        body .login-container .login-form-container .form .form-title {
+          margin-bottom: 5px; }
       body .login-container .login-form-container input {
         width: calc(250px - 4px);
         height: 25px;
-        font-size: 16px; }
+        font-size: 16px;
+        border: 1px solid #a8b3bf;
+        color: #264161;
+        padding: 1px 0 1px 5px; }
     body .login-container .login-start-container {
       position: absolute;
       bottom: 5px; }
-      body .login-container .login-start-container input {
+      body .login-container .login-start-container button {
         width: 250px;
-        height: 25px;
-        font-size: 16px; }
+        height: calc(25px + 4px);
+        font-size: 16px;
+        border: 1px solid #a8b3bf;
+        color: #264161;
+        background-color: #fff; }
   body #container {
     display: -webkit-box;
     display: flex;
@@ -44,13 +51,20 @@ body {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
             flex-direction: row;
-    height: 100vh; }
+    height: 100vh;
+    background: #264161; }
     body #container .player-info-container {
-      height: 339px;
+      height: 300px;
+      width: 500px;
       border: 1px solid #777;
-      position: relative; }
+      position: relative;
+      background: #677a90;
+      color: #d3d9df; }
       body #container .player-info-container.active {
-        box-shadow: 0px 0px 10px red; }
+        background: white;
+        color: #264161; }
+        body #container .player-info-container.active .player-name {
+          border-bottom: 3px solid #264161; }
       body #container .player-info-container.left {
         margin-right: 10px; }
       body #container .player-info-container.right {
@@ -58,15 +72,36 @@ body {
       body #container .player-info-container .player-name {
         padding: 5px;
         text-align: center;
-        font-size: 25px; }
+        font-size: 25px;
+        border-bottom: 3px solid #d3d9df; }
+        body #container .player-info-container .player-name.computer:before {
+          font-family: "FontAwesome";
+          content: "\f108";
+          padding-right: 5px; }
+        body #container .player-info-container .player-name:before {
+          font-family: "FontAwesome";
+          content: "\f007";
+          padding-right: 5px; }
       body #container .player-info-container .player-shots {
-        padding: 5px; }
+        padding: 15px 0 15px 10px;
+        font-size: 20px; }
+        body #container .player-info-container .player-shots .player-kill,
+        body #container .player-info-container .player-shots .player-miss {
+          display: inline-block;
+          width: 50%; }
       body #container .player-info-container .player-ships {
-        padding: 5px; }
+        padding: 5px;
+        font-size: 20px; }
+  body .game-over {
+    width: 300px;
+    height: 150px;
+    text-align: center;
+    border-radius: 4px;
+    background: #fff;
+    color: #264161; }
   body .board {
     width: 511px;
     height: 341px;
-    background: url(../img/desktop-background.jpg) no-repeat;
     background-size: 100%;
     display: -webkit-box;
     display: flex;
