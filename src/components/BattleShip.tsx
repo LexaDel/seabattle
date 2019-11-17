@@ -161,7 +161,6 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 					cell.highlight = false;
 					player.ships.remove(cell.ship);
 					message = "Убил";
-					player.ships.clear();
 					if (player.ships.size() === 0) {
 						message = "Игра окончена";
 						gameState = GAME_OVER;

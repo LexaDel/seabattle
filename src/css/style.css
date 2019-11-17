@@ -92,6 +92,12 @@ body {
       body #container .player-info-container .player-ships {
         padding: 5px;
         font-size: 20px; }
+        body #container .player-info-container .player-ships .ship1,
+        body #container .player-info-container .player-ships .ship2,
+        body #container .player-info-container .player-ships .ship3,
+        body #container .player-info-container .player-ships .ship4 {
+          display: table-cell;
+          padding: 5px; }
   body .game-over {
     width: 300px;
     height: 150px;

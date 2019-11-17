@@ -6,7 +6,7 @@ interface ShipFormProp {
 export class ShipForm extends React.PureComponent<ShipFormProp, {}> {
     public render() {
         const deck = this.getDeck(this.props.size);
-        const cls = `ship{this.props.size}`;
+        const cls = `ship${this.props.size}`;
         return (
             <div className={cls}>{deck}</div>
         );
