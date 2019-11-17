@@ -34,7 +34,7 @@ export default class LoginForm extends React.PureComponent<LoginFormProps, {}> {
                     {this.renderInputName(countPlayers)}
                 </div>
                 <div className="login-start-container">
-                    <input type="button" value="Начать игру" onClick={this.onHandleClick}/>
+                    <button onClick={this.onHandleClick}>Начать игру</button>
                 </div>
             </div>
         );

@@ -16,7 +16,8 @@ interface State {
 	[name: string]: any;
 	gameState: string;
     message?: string;
-    status: string;
+	status: string;
+	winner?: string;
 }
 
 export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
@@ -86,7 +87,6 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 				<React.Fragment>
 					<PlayerInfoForm player={player1} active={player1.name === this.state.gameState} position={"left"}/>
 					<div className="board">
-						<h3> {this.state.gameState} </h3>
 						<div className="flipper">
 							<div className="front">
 								<Field 
@@ -102,48 +102,55 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 			);
 		} else {
 			return (
-				<div> Игра окончена </div>
+				<div className="game-over">
+					<h1> Игра окончена </h1>
+					<div>Победил {this.state.winner}</div> 
+				</div>
 			);
 		}
     }
     
 
 	private cellClick = (x: number, y: number) => {
+		let gameOver = false;
 		this.setState((state: State) => {
 			const player: PlayerInfo = state[state.gameState];
 			const cell = player.field[x].cells[y];
 			const result = this.ply(cell, player);
 			this.highlightRiskCells(player.field, cell);
+			gameOver = result.gameState === GAME_OVER;
 			return result && {
 				gameState: result.gameState,
 				[state.gameState]: result.player,
                 message: result.message,
-                status: STATUS.SHOW
+				status: STATUS.SHOW,
+				winner: result.winner
 			}
-        });
+		});
         
-        // Shows field for 5 seconds and pass the move to the next player.
+		// Shows field for 5 seconds and pass the move to the next player.
 		setTimeout(() => {
-            this.setState(() => {			
-                const turn = this.queuePlayers.shift();
-                if (turn !== undefined) { this.queuePlayers.push(turn) };
-                return {
-                    gameState: this.queuePlayers[0],
-                    message: `Ходит ${this.queuePlayers[0]}`,
-                    status: STATUS.ATTACK
-                }
-            });
-            if (this.props.gameMode === GAME_MODE.USER_VS_PC && this.state[this.queuePlayers[0]].isPC) {
-                this.computerStep();
-            }
-        }, STEP_TIME);
-
-
+			if (!gameOver) {
+				this.setState(() => {			
+					const turn = this.queuePlayers.shift();
+					if (turn !== undefined) { this.queuePlayers.push(turn) };
+					return {
+						gameState: this.queuePlayers[0],
+						message: `Ходит ${this.queuePlayers[0]}`,
+						status: STATUS.ATTACK
+					}
+				});
+				if (this.props.gameMode === GAME_MODE.USER_VS_PC && this.state[this.queuePlayers[0]].isPC) {
+					this.computerStep();
+				}
+			}
+		}, STEP_TIME);
 	}
 
 	private ply(cell: CellModel, player: PlayerInfo): any {
 		if (cell.ship !== -1 || cell.state === CELL_STATE.EMPTY) {
 			let message = "";
+			let winner = "";
             let gameState = this.queuePlayers[0];
 			if (cell.ship !== -1) {
 				cell.state = CELL_STATE.HIT;
@@ -154,9 +161,11 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 					cell.highlight = false;
 					player.ships.remove(cell.ship);
 					message = "Убил";
+					player.ships.clear();
 					if (player.ships.size() === 0) {
 						message = "Игра окончена";
 						gameState = GAME_OVER;
+						winner = player.name;
 					}
 				} else {
 					cell.highlight = false;
@@ -171,7 +180,8 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 			return {
 				gameState,
 				message,
-				player
+				player,
+				winner
 			}
 		}
 		return undefined;

@@ -6,7 +6,7 @@ export const enum CELL_STATE {
 }
 
 export const SIZE_FIELD = 10;
-export const STEP_TIME = 3000;
+export const STEP_TIME = 1500;
 
 export const enum ORIENTATION {
     VERTICAL = "vertical",
