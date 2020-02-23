@@ -1,7 +1,6 @@
 import * as React from "react";
 import { PlayerInfo, IShip } from 'src/definition/Model';
 import { ShipForm } from './ShipForm';
-import { Dictionary } from 'typescript-collections';
 
 interface PlayerInfoProps {
     active: boolean;
@@ -20,16 +19,16 @@ export class PlayerInfoForm extends React.PureComponent<PlayerInfoProps, {}> {
                     <div className="player-kill">Убито: {player.kills}</div>
                     <div className="player-miss">Промахов: {player.misses}</div>
                 </div>
-                <div className="player-ships"> Кораблей осталось: {player.ships.size()}
+                <div className="player-ships"> Кораблей осталось: {player.ships.size}
                     {this.renderShips(player.ships)}
                 </div>
             </div>
         );
     }
 
-    private renderShips(ships: Dictionary<number, IShip>): JSX.Element[] {
+    private renderShips(ships: Map<number, IShip>): JSX.Element[] {
         const shipForm: JSX.Element[] = [];
-        ships.forEach((key: number, ship: IShip) => {
+        ships.forEach(ship => {
             shipForm.push(<ShipForm size={ship.getSize()}/>)
         });
         return shipForm

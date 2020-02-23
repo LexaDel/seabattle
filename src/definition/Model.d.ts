@@ -1,5 +1,4 @@
 import { CELL_STATE } from "../constants/Constants";
-import * as Collections from 'typescript-collections';
 
 export interface Row {
 	x: number;
@@ -24,7 +23,7 @@ export interface PlayerInfo {
 	misses: number; 
 	field: Row[],
 	history: History,
-	ships: Collections.Dictionary<number, IShip>,
+	ships: Map<number, IShip>,
 	isPC: boolean
 }
 

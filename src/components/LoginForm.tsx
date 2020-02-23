@@ -1,5 +1,4 @@
 import * as React from "react";
-import * as $ from "jquery";
 import { List } from "./List";
 import { Form } from "./Form";
 
@@ -61,8 +60,8 @@ export default class LoginForm extends React.PureComponent<LoginFormProps, {}> {
         const players: string[] = [];
         for (let i = 1; i <= this.state.countPlayers; i++) {
             const idEl = `player-${i}`;
-            const player = ($(`#${idEl}`).val() as string);
-            players.push(player || idEl);
+            const input = document.getElementById(idEl) as HTMLInputElement;
+            players.push(input.value || idEl);
         }
         this.props.onLogin(true, players);
     }

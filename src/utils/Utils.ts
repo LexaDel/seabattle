@@ -1,7 +1,6 @@
 import { CELL_STATE, ORIENTATION } from "src/constants/Constants";
 import { Cell, Row, IShip } from "../definition/Model.d";
 import { Ship } from "../controls/Ship";
-import * as Collections from "typescript-collections";
 
 interface Place {
     x: number;
@@ -23,18 +22,18 @@ export function createField(size: number): Row[] {
     return rows;
 }
 
-export function createShips(listOfShips: any[]): Collections.Dictionary<number, IShip> {
-    const ships: Collections.Dictionary<number, IShip> = new Collections.Dictionary<number, IShip>();
+export function createShips(listOfShips: any[]): Map<number, IShip> {
+    const ships: Map<number, IShip> = new Map<number, IShip>();
     listOfShips.forEach((item: any, index: number) => {
         const ship = new Ship(item.size);
-        ships.setValue(index, ship);
+        ships.set(index, ship);
     })
     return ships;
 }
 
 
-export function fillRandom(field: Row[], ships: Collections.Dictionary<number, IShip>) {
-    ships.forEach((key: number, ship: IShip) => {
+export function fillRandom(field: Row[], ships: Map<number, IShip>) {
+    ships.forEach((ship: IShip, key: number) => {
         const size = ship.getSize();
         const places = getPlaces(field, size);
         if (places.length) {
@@ -122,4 +121,14 @@ function placeTo(field: Row[], ship: number, shipSize: number, place: Place): vo
         field[x].cells[j].ship = ship;
       }
     }
+}
+
+export function getCoords(field: Row[]): { x: number, y: number } {
+    let x = random(9);
+    let y = random(9);
+    while (field[x].cells[y].state !== CELL_STATE.EMPTY) {
+        x = random(9);
+        y = random(9);
+    }
+    return { x, y };
 }

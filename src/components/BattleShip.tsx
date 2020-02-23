@@ -1,9 +1,9 @@
 import * as React from "react";
 import Field from "./Field";
-import { SIZE_FIELD, GAME_OVER, STATUS, STEP_TIME, GAME_MODE, COMPUTER_NAME } from "../constants/Constants";
+import { SIZE_FIELD, GAME_OVER, STATUS, STEP_TIME, GAME_MODE, COMPUTER_NAME, listOfShip } from "../constants/Constants";
 import { History as HistoryModel, PlayerInfo } from "../definition/Model";
 import { Player } from "../controls/Player";
-import { createField, createShips, fillRandom, random } from "../utils/Utils";
+import { createField, createShips, fillRandom, getCoords } from "../utils/Utils";
 import { Cell as CellModel, Row as RowModel } from "src/definition/Model";
 import { CELL_STATE } from "src/constants/Constants";
 import { PlayerInfoForm } from './PlayerInfoForm';
@@ -26,27 +26,6 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 
 	constructor(props: any) {
 		super(props);
-		const listOfShip = [{
-			size: 1
-		}, {
-			size: 1
-		}, {
-			size: 1
-		}, {
-			size: 1
-		}, {
-			size: 2
-		}, {
-			size: 2
-		}, {
-			size: 2
-		}, {
-			size: 3
-		}, {
-			size: 3
-		}, {
-			size: 4
-		}];
 		const fieldP1 = createField(SIZE_FIELD);
 		const fieldP2 = createField(SIZE_FIELD);
 		const shipsP1 = createShips(listOfShip);
@@ -154,14 +133,14 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
             let gameState = this.queuePlayers[0];
 			if (cell.ship !== -1) {
 				cell.state = CELL_STATE.HIT;
-				const ship = player.ships.getValue(cell.ship);
+				const ship = player.ships.get(cell.ship);
 				const deathShip = ship && ship.hit();
 				if (deathShip) {
 					player.kills++;
 					cell.highlight = false;
-					player.ships.remove(cell.ship);
+					player.ships.delete(cell.ship);
 					message = "Убил";
-					if (player.ships.size() === 0) {
+					if (player.ships.size === 0) {
 						message = "Игра окончена";
 						gameState = GAME_OVER;
 						winner = player.name;
@@ -188,14 +167,9 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
     
     private computerStep(): void {
         setTimeout(() => {
-            const field = this.state[this.state.gameState].field as RowModel[];
-            const x = random(9);
-            const y = random(9);
-            if (field[x].cells[y].state !== CELL_STATE.MISS) {
-                this.cellClick(x, y);
-            } else {
-                this.computerStep();
-            }
+			const field = this.state[this.state.gameState].field as RowModel[];
+            const { x, y } = getCoords(field);
+			this.cellClick(x, y);
         },900);
 	}
 	

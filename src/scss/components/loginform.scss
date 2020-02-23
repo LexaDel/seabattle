@@ -1,0 +1,62 @@
+@import '../variables/_variables.scss';
+
+.login-container {
+    position: relative;
+    width: 250px;
+    height: 240px;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: rgba(255,255,255, 0.9);
+
+    .login-list-container {
+        .login-list-title {
+            font-weight: bold;
+        }
+
+        .list {
+            select {
+                width: $default-input-width;
+                height: calc(#{$default-input-height} + 4px);
+                font-size: $default-input-font-size;
+                margin: 5px 0 5px 0;
+            }
+        }
+    }
+
+    .login-form-container {
+        padding: 10px 0 15px 0;
+        width: 100%;
+    
+        .form {
+            padding-top: 10px;
+            .form-title{
+                margin-bottom: 5px;
+            }
+        }
+        
+    
+        input {
+            width: calc(#{$default-input-width} - 4px);
+            height: $default-input-height;
+            font-size: $default-input-font-size;
+            border: $default-input-border;
+            color: $default-input-font-color;
+            padding: 1px 0 1px 5px;
+        }
+    }
+
+    .login-start-container {     
+        position: absolute;
+        bottom: 5px;
+
+        button {
+            width: $default-input-width;
+            height: calc(#{$default-input-height} + 4px);
+            font-size: $default-input-font-size;
+            border: $default-input-border;
+            color: $default-input-font-color;
+            background-color: #fff;
+        }
+    }
+}

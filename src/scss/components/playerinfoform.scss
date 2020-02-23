@@ -1,0 +1,57 @@
+@import '../variables/_variables.scss';
+
+.player-info-container {
+    height: 300px;
+    width: 500px;
+    border: 1px solid #777;
+    position: relative;
+    background: #677a90;
+    color: #d3d9df;
+
+    &.active{
+        background: white;
+        color: $default-input-font-color;
+
+        .player-name {
+            border-bottom: 3px solid $default-input-font-color;
+        }
+    }
+
+    &.left {
+        margin-right: 10px;
+    }
+
+    &.right {
+        margin-left: 10px;
+    }
+    
+    .player-name {
+        padding: 5px;
+        text-align: center;
+        font-size: 25px;
+        border-bottom: 3px solid #d3d9df;
+    }
+
+    .player-shots {
+        padding: 15px 0 15px 10px;
+        font-size: 20px;
+        .player-kill,
+        .player-miss {
+            display: inline-block;
+            width: 50%;
+        }
+    }
+
+    .player-ships {
+        padding: 5px;
+        font-size: 20px;
+
+        .ship1,
+        .ship2,
+        .ship3,
+        .ship4 {
+            display: table-cell;
+            padding: 5px;
+        }
+    }
+}

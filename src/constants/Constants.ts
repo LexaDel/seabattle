@@ -5,6 +5,28 @@ export const enum CELL_STATE {
     EMPTY = "empty"
 }
 
+export const listOfShip = [{
+    size: 1
+}, {
+    size: 1
+}, {
+    size: 1
+}, {
+    size: 1
+}, {
+    size: 2
+}, {
+    size: 2
+}, {
+    size: 2
+}, {
+    size: 3
+}, {
+    size: 3
+}, {
+    size: 4
+}];
+
 export const SIZE_FIELD = 10;
 export const STEP_TIME = 1500;
 

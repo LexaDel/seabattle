@@ -1,0 +1,78 @@
+.board {
+    width: 511px;
+    height: 341px;
+    background-size: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1000;
+
+    .flipper.rotate {
+        transform: rotateY(180deg);
+    }
+
+    .flipper {
+        transition: 0.6s;
+        transform-style: preserve-3d;
+        position: relative;
+    }
+
+    .front,
+    .back {
+        backface-visibility: hidden;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .front {
+        z-index: 2;
+        background-color: #fff;
+    }
+
+    .back {
+        transform: rotateY(180deg);
+        background-color: #777;
+    }
+
+    .seabattle-field,
+    .flipper {
+        height: 300px;
+        width: 300px;
+    }
+
+    .seabattle-field {
+        border-top: 1px solid #000;
+        border-left: 1px solid #000;
+
+        .row {
+            height: 29px;
+            border-bottom: 1px solid #000;
+        }
+        
+        .cell {                    
+            width: 29px;
+            height: 100%;
+            display: inline-block;
+            border-right: 1px solid #000;
+
+            &.hit,
+            &.miss {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAdCAMAAABhTZc9AAAAqFBMVEUAAAD////+/v7////////5+fn29vbPz8/7+/v6+vrQ0ND9/f339/f19fX////////9/f35+fn////////S0tLl5eXPz8/9/f38/PzR0dH39/fg4ODPz8/b29v19fX////////a2trS0tLX19fV1dXT09P////////+/v77+/v4+Pj7+/v7+/v5+fn////////V1dX4+Pj5+fn39/f19fXk5OTW1tb///8rFLhwAAAAN3RSTlMA7u3x4ds2LublNutCQPnl4t/c2jgvK+bbMS8sKCYl9PM/MywlA/rp6Oji39G7QT49OuvEtBoR/7KiUgAAAUFJREFUeAFt0umWmlAQBOC6CzLIjjCgMS7jYlw0miX9/m+W1DEOwrX+fqc4fbtBYaw1yo3JrCmQzC+REjc/rvEigb0AA+3gmw8sM4wm+MdhH98B+A0S+xVA1G0fhwD+nLbQkpIHqt/8fRIFJeJVAG71J+Y+gKUndxU7AxCb/1jzs++B3JX8pR0tmAL4CKVVGZHjbyLisVl68qySztg2ojnQVEtXpWE7On8AuObSVynY3gBYHcRVqSdgSi2OMmc2Nz/lpYZDMJF5pTmnZW6hq3kJYPyrAt/d13BNfJxk0VVuCEOPW2P7++5Z97yK/yZMMyOrVoMpm0Qm5dYm+qFByeZBHuHPhGhH1VKzudpLG8sRB1o0kmDMewatkSuymoPv5EDdeHxYnMFbOcikayq2ejkOxM2xikyCwmTNQrmZj6wp/gIyqWcdCm1MhQAAAABJRU5ErkJggg==);
+                background-repeat: no-repeat;
+            }
+
+            &.hit {
+                background-color: #ff0000;
+            }
+
+            &.miss {
+                background-color: #666;
+            }
+
+            &.highlight {
+                background-color: #d1d1d1;
+            }
+        }
+    }
+}
