@@ -13,7 +13,6 @@ export default class Cell extends React.Component<CellProps, {}> {
         return (
         <div 
             className={className} 
-            key={`cell-${x}-${y}`} 
             onClick={this.handleCellClick.bind(this, x, y)}
         />);
     }

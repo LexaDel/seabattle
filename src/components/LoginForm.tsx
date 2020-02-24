@@ -45,7 +45,7 @@ export default class LoginForm extends React.PureComponent<LoginFormProps, {}> {
             const title = `Введите имя игрока ${i}`;
             const idEl = `player-${i}`;
 
-            forms.push(<Form title={title} id={idEl}/>);
+            forms.push(<Form title={title} id={idEl} key={i}/>);
         }
         return forms;
     }

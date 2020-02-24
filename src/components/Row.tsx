@@ -19,10 +19,6 @@ export default class Row extends React.Component<RowProps, {}> {
     }
 
     private renderCells(list: CellModel[]): JSX.Element[] {
-        const cells: JSX.Element[] = [];
-        for (const cell of list) {
-            cells.push(<Cell cell={cell} onCellClick={this.props.onCellClick}/>);
-        }
-        return cells;
+        return list.map(cell => <Cell key={`cell-${cell.x}-${cell.y}`} cell={cell} onCellClick={this.props.onCellClick}/>);
     }
 }

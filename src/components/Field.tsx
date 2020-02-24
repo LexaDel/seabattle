@@ -23,18 +23,13 @@ export default class Field extends React.Component<FieldProps, {}> {
         const className = `seabattle-field player-${this.props.playerID}`;
         const { field } = this.props;
         return (
-            <div className={className}>
+            <div className={className} key={this.props.playerID}>
                 {this.renderRows(field)}
             </div>
         );
     }
 
     private renderRows(field: RowModel[]): JSX.Element[] {
-        const rows: JSX.Element[] = [];
-        for (const row of field) {
-            const {x, cells} = row;
-            rows.push(<Row x={x} cells={cells} onCellClick={this.props.onCellClick}/>);
-        }
-        return rows;
+        return field.map(row => <Row key={row.x.toString()} x={row.x} cells={row.cells} onCellClick={this.props.onCellClick}/>);
     }
 }

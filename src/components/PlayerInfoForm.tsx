@@ -28,8 +28,8 @@ export class PlayerInfoForm extends React.PureComponent<PlayerInfoProps, {}> {
 
     private renderShips(ships: Map<number, IShip>): JSX.Element[] {
         const shipForm: JSX.Element[] = [];
-        ships.forEach(ship => {
-            shipForm.push(<ShipForm size={ship.getSize()}/>)
+        ships.forEach((ship: IShip, key: number) => {
+            shipForm.push(<ShipForm size={ship.getSize()} key={key}/>)
         });
         return shipForm
     }
