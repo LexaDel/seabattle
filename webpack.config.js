@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
+  mode: 'development',
   entry: './src/index.tsx',
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
@@ -23,5 +24,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     })
-  ]
+  ],
+  devServer: {
+    contentBase: path.join(__dirname, 'build'),
+  }
 }
