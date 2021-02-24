@@ -168,9 +168,7 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
     }
     
     private computerStep(): void {
-        setTimeout(() => {
-			console.log('turn pc');
-			
+        setTimeout(() => {			
 			const  playerInfo = this.state[this.state.gameState];
             const { x, y } = calculateCoordinate(playerInfo);
 			this.cellClick(x, y);

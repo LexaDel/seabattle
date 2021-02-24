@@ -146,8 +146,6 @@ export function checkCoordinate(field: Row[], coordinate: Coordinate) {
     if (x > SIZE_FIELD - 1 || y > SIZE_FIELD - 1 || x < 0 || y < 0) {
         return false;
     };
-
-    console.log(`check x:${coordinate.x} y: ${coordinate.y}`);
     
     return field[x].cells[y].state === CELL_STATE.EMPTY;
 }
@@ -180,7 +178,6 @@ function calculateTentativeSteps(field: Row[], coordinate: Coordinate, orientati
 
 export function calculateCoordinate(playerInfo: PlayerInfo): Coordinate {
     const { field, ships } = playerInfo;
-    console.log('1');
     
     if (tentativeSteps.steps && tentativeSteps.steps.length > 0) {
         const { x, y } = tentativeSteps.steps.pop()!;
@@ -206,18 +203,13 @@ export function calculateCoordinate(playerInfo: PlayerInfo): Coordinate {
                 hits: [],
             };
         }
-        console.log(`health: ${ship && ship.getHealth()}, tentativeSteps: ${tentativeSteps}`);
 
-        console.log(tentativeSteps);        
         return { x, y };
     }
-
-    console.log('2');
 
     let x = random(SIZE_FIELD);
     let y = random(SIZE_FIELD);
     while (field[x].cells[y].state !== CELL_STATE.EMPTY) {
-        console.log('3');
         x = random(SIZE_FIELD);
         y = random(SIZE_FIELD);
     }
