@@ -1,3 +1,5 @@
+import { SIZE_FIELD } from './../constants/Constants';
+import { Coordinate, PlayerInfo } from './../definition/Model.d';
 import { CELL_STATE, ORIENTATION } from "src/constants/Constants";
 import { Cell, Row, IShip } from "../definition/Model.d";
 import { Ship } from "../controls/Ship";
@@ -7,6 +9,15 @@ interface Place {
     y: number;
     orientation: ORIENTATION;
 }
+
+let tentativeSteps: {
+    steps: Coordinate[],
+    hits: Coordinate[],
+    orientation?: ORIENTATION,
+} = {
+    steps: [],
+    hits: [],
+};
 
 export function createField(size: number): Row[] {
     const rows = new Array<Row>(size);
@@ -123,12 +134,99 @@ function placeTo(field: Row[], ship: number, shipSize: number, place: Place): vo
     }
 }
 
-export function getCoords(field: Row[]): { x: number, y: number } {
-    let x = random(9);
-    let y = random(9);
-    while (field[x].cells[y].state !== CELL_STATE.EMPTY) {
-        x = random(9);
-        y = random(9);
+function calculateOrientation(firstCoordinate: Coordinate, secondCoordinate: Coordinate): ORIENTATION | undefined {
+    if (firstCoordinate.x - secondCoordinate.x !== 0) return ORIENTATION.HORIZONTAL;
+    if (firstCoordinate.y - secondCoordinate.y !== 0) return ORIENTATION.VERTICAL;
+
+    return;
+}
+
+export function checkCoordinate(field: Row[], coordinate: Coordinate) {
+    const { x, y } = coordinate;
+    if (x > SIZE_FIELD - 1 || y > SIZE_FIELD - 1 || x < 0 || y < 0) {
+        return false;
+    };
+
+    console.log(`check x:${coordinate.x} y: ${coordinate.y}`);
+    
+    return field[x].cells[y].state === CELL_STATE.EMPTY;
+}
+
+function calculateTentativeSteps(field: Row[], coordinate: Coordinate, orientation?: ORIENTATION): void {
+    const { x, y } = coordinate;
+    if (!orientation) {
+        checkCoordinate(field, { x: x + 1, y }) && tentativeSteps.steps.push({ x: x + 1, y });
+        checkCoordinate(field, { x: x - 1, y }) && tentativeSteps.steps.push({ x: x - 1, y });
+        checkCoordinate(field, { x, y: y + 1 }) && tentativeSteps.steps.push({ x, y: y + 1 });
+        checkCoordinate(field, { x, y: y - 1 }) && tentativeSteps.steps.push({ x, y: y - 1 });
     }
+    if (orientation === ORIENTATION.HORIZONTAL) {
+        const xCoordinates = tentativeSteps.hits.map(({ x }) => x);
+        const maxX = Math.max(...xCoordinates);
+        const minX = Math.min(...xCoordinates);
+        
+        checkCoordinate(field, { x: maxX + 1, y }) && tentativeSteps.steps.push({ x: maxX + 1, y });
+        checkCoordinate(field, { x: minX - 1, y }) && tentativeSteps.steps.push({ x: minX - 1, y });
+    }
+    if (orientation === ORIENTATION.VERTICAL) {
+        const yCoordinates = tentativeSteps.hits.map(({ y }) => y);
+        const maxY = Math.max(...yCoordinates);
+        const minY = Math.min(...yCoordinates);
+
+        checkCoordinate(field, { x, y: maxY + 1 }) && tentativeSteps.steps.push({ x, y: maxY + 1 });
+        checkCoordinate(field, { x, y: minY - 1 }) && tentativeSteps.steps.push({ x, y: minY - 1 });
+    }
+}
+
+export function calculateCoordinate(playerInfo: PlayerInfo): Coordinate {
+    const { field, ships } = playerInfo;
+    console.log('1');
+    
+    if (tentativeSteps.steps && tentativeSteps.steps.length > 0) {
+        const { x, y } = tentativeSteps.steps.pop()!;
+        const ship = ships.get(field[x].cells[y].ship);
+        if (ship && !tentativeSteps.orientation) {
+            // set orientation
+            tentativeSteps.orientation = calculateOrientation({ x, y }, tentativeSteps.hits[tentativeSteps.hits.length - 1]);
+            tentativeSteps.steps = [];
+            calculateTentativeSteps(field, { x, y }, tentativeSteps.orientation);
+        }
+
+        if (ship && ship.getHealth() > 1) {
+            // increase hits
+            tentativeSteps.hits.push({ x, y });
+            tentativeSteps.steps = [];
+            calculateTentativeSteps(field, { x, y }, tentativeSteps.orientation);
+        }       
+        
+        if (ship && ship.getHealth() === 1) {
+            // reset steps
+            tentativeSteps = {
+                steps: [],
+                hits: [],
+            };
+        }
+        console.log(`health: ${ship && ship.getHealth()}, tentativeSteps: ${tentativeSteps}`);
+
+        console.log(tentativeSteps);        
+        return { x, y };
+    }
+
+    console.log('2');
+
+    let x = random(SIZE_FIELD);
+    let y = random(SIZE_FIELD);
+    while (field[x].cells[y].state !== CELL_STATE.EMPTY) {
+        console.log('3');
+        x = random(SIZE_FIELD);
+        y = random(SIZE_FIELD);
+    }
+
+    const ship = ships.get(field[x].cells[y].ship);
+    if (ship && ship.getHealth() > 1) {
+        calculateTentativeSteps(field, { x, y });
+        tentativeSteps.hits.push({ x, y });
+    }
+
     return { x, y };
 }

@@ -3,7 +3,7 @@ import Field from "./Field";
 import { SIZE_FIELD, GAME_OVER, STATUS, STEP_TIME, GAME_MODE, COMPUTER_NAME, listOfShip } from "../constants/Constants";
 import { History as HistoryModel, PlayerInfo } from "../definition/Model";
 import { Player } from "../controls/Player";
-import { createField, createShips, fillRandom, getCoords } from "../utils/Utils";
+import { createField, createShips, fillRandom, calculateCoordinate, checkCoordinate } from "../utils/Utils";
 import { Cell as CellModel, Row as RowModel } from "src/definition/Model";
 import { CELL_STATE } from "src/constants/Constants";
 import { PlayerInfoForm } from './PlayerInfoForm';
@@ -92,6 +92,8 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
 
 	private cellClick = (x: number, y: number) => {
 		let gameOver = false;
+		if (!checkCoordinate(this.state[this.state.gameState].field, { x, y })) return;
+
 		this.setState((state: State) => {
 			const player: PlayerInfo = state[state.gameState];
 			const cell = player.field[x].cells[y];
@@ -167,10 +169,12 @@ export class BattleShip extends React.PureComponent<BattleShipProps, {}> {
     
     private computerStep(): void {
         setTimeout(() => {
-			const field = this.state[this.state.gameState].field as RowModel[];
-            const { x, y } = getCoords(field);
+			console.log('turn pc');
+			
+			const  playerInfo = this.state[this.state.gameState];
+            const { x, y } = calculateCoordinate(playerInfo);
 			this.cellClick(x, y);
-        },900);
+        }, 900);
 	}
 	
 	private highlightRiskCells(field: RowModel[], cell: CellModel): void {

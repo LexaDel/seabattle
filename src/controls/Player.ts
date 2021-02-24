@@ -3,7 +3,7 @@ import {
     History,
     Player as PlayerModel,
     PlayerInfo,
-    Row
+    Row,
     } from "../definition/Model";
 
 export class Player {
